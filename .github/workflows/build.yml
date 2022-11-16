@@ -29,5 +29,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          context: "{{defaultContext}}:images/jupyter.dockerfile"
+          context: .
           tags: doku9652/cudabook:jupyter
