@@ -31,3 +31,7 @@ jobs:
           push: true
           context: .
           tags: doku9652/cudabook:jupyter
+          build-args: |
+            NB_USER=jovyan
+            NB_UID=1000
+            NB_GID=100
