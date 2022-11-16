@@ -99,8 +99,8 @@ RUN set -x && \
         "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \
-    fix-permissions "${CONDA_DIR}" && \
     chown -R root "${CONDA_DIR}" && \
+    fix-permissions "${CONDA_DIR}" && \
     # Install the packages
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
