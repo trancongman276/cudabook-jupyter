@@ -1,10 +1,10 @@
 # Ubuntu 22.04 (jammy)
 FROM jupyter/docker-stacks-foundation as RUNTIME
-RUN python -m pip install torch torchvision torchaudio tensorflow
 
 # cuda version 11.6.2
 ARG CUDA=116 
 FROM hieupth/minicuda:11.6-runtime as ENV
+RUN python -m pip install torch torchvision torchaudio tensorflow
 
 COPY --from=RUNTIME . .
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -25,9 +25,9 @@ RUN apt-get update --yes && \
     run-one && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV NB_USER jovyan
+ENV NB_USER admin
 ENV NB_UID $(id -u)
-ENV CONDA_DIR ""
+ENV CONDA_DIR $(which conda)
 ENV GEN_CERT yes
 ENV JUPYTERHUB_SERVICE_PREFIX "/"
 ENV HOME "/home/${NB_USER}"
