@@ -25,6 +25,13 @@ RUN apt-get update --yes && \
     run-one && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+ENV NB_USER jovyan
+ENV NB_UID $(id -u)
+ENV CONDA_DIR ""
+ENV GEN_CERT yes
+ENV JUPYTERHUB_SERVICE_PREFIX "/"
+ENV HOME "/home/${NB_USER}"
+
 USER ${NB_UID}
 
 # Install Jupyter Notebook, Lab, and Hub
