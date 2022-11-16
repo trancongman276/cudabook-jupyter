@@ -4,7 +4,7 @@ RUN python -m pip install torch torchvision torchaudio tensorflow
 
 # cuda version 11.6.2
 ARG CUDA=116 
-FROM hieupth/minicuda:${CUDA}-runtime as ENV
+FROM hieupth/minicuda:11.6-runtime as ENV
 
 COPY --from=RUNTIME . .
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
