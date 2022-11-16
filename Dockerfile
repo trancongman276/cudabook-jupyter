@@ -1,5 +1,6 @@
 ARG CUDA=116 
 FROM hieupth/minicuda:11.6-runtime as base
+ENV CONDA_DIR=$(which conda)
 RUN python -m pip install torch torchvision torchaudio tensorflow
 
 ARG NB_USER="jovyan"
@@ -35,8 +36,7 @@ RUN apt-get update --yes && \
     locale-gen
 
 # Configure environment
-ENV CONDA_DIR="$(which conda)" \
-    SHELL=/bin/bash \
+ENV SHELL=/bin/bash \
     NB_USER="${NB_USER}" \
     NB_UID=${NB_UID} \
     NB_GID=${NB_GID} \
