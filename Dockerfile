@@ -28,7 +28,7 @@ RUN apt-get update --yes && \
     # - tini is installed as a helpful container entrypoint that reaps zombie
     #   processes and such of the actual executable we want to start, see
     #   https://github.com/krallin/tini#why-tini for details.
-    # tini \
+    tini \
     wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -99,6 +99,8 @@ RUN set -x && \
         "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \
+    fix-permissions "${CONDA_DIR}" && \
+    chown -R root "${CONDA_DIR}" && \
     # Install the packages
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
