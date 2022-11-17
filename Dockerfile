@@ -122,7 +122,7 @@ CMD ["start.sh"]
 
 # Copy local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
-
+RUN chmod +x /usr/local/bin/start.sh
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
@@ -177,6 +177,8 @@ CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
 COPY start-notebook.sh start-singleuser.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-notebook.sh /usr/local/bin/start-singleuser.sh
+
 # Currently need to have both jupyter_notebook_config and jupyter_server_config to support classic and lab
 COPY jupyter_server_config.py /etc/jupyter/
 
