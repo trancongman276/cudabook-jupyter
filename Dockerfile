@@ -100,7 +100,7 @@ RUN set -x && \
     rm /tmp/micromamba.tar.bz2 && \
     # chown -R root "${CONDA_DIR}" && \
     # Install the packages
-    echo "!docker" | sudo -S ./micromamba install \
+    ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
@@ -149,8 +149,6 @@ RUN apt-get update --yes && \
     run-one && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-USER ${NB_UID}
-
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
 # Cleanup temporary files
@@ -171,6 +169,8 @@ RUN mamba install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 EXPOSE 8888
+
+USER ${NB_UID}
 
 # Configure container startup
 CMD ["start-notebook.sh"]
