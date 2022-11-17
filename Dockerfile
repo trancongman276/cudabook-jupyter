@@ -1,5 +1,5 @@
 ARG CUDA=116 
-FROM hieupth/minicuda:11.6-runtime as base
+FROM hieupth/minicuda:11.6.2-runtime as base
 RUN python -m pip install torch torchvision torchaudio tensorflow
 
 ARG NB_USER="jovyan"
