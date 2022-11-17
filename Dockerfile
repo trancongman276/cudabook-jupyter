@@ -100,7 +100,7 @@ RUN set -x && \
     rm /tmp/micromamba.tar.bz2 && \
     # chown -R root "${CONDA_DIR}" && \
     # Install the packages
-    ./micromamba install \
+    sudo ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
