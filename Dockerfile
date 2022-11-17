@@ -102,7 +102,7 @@ RUN set -x && \
     rm /tmp/micromamba.tar.bz2 && \
     # chown -R root "${CONDA_DIR}" && \
     # Install the packages
-    echo "!docker" | sudo ./micromamba install \
+    echo "!docker" | sudo -S ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
