@@ -10,6 +10,7 @@ ARG NB_GID="100"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -44,6 +45,8 @@ ENV CONDA_DIR=/opt/conda \
     LANGUAGE=en_US.UTF-8
 ENV PATH="${CONDA_DIR}/bin:${PATH}" \
     HOME="/home/${NB_USER}"
+
+RUN useradd -m ${NB_USER} && echo "${NB_USER}:!docker" | chpasswd && adduser ${NB_USER} sudo
 
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
@@ -100,7 +103,7 @@ RUN set -x && \
     rm /tmp/micromamba.tar.bz2 && \
     # chown -R root "${CONDA_DIR}" && \
     # Install the packages
-    sudo ./micromamba install \
+    echo "!docker" | sudo ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
@@ -114,7 +117,6 @@ RUN set -x && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-USER root
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
@@ -131,6 +133,8 @@ WORKDIR "${HOME}"
 
 FROM base
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+USER root
 
 
 # Install all OS dependencies for notebook server that starts but lacks all
@@ -169,8 +173,6 @@ RUN mamba install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 EXPOSE 8888
-
-USER root
 
 # Configure container startup
 CMD ["start-notebook.sh"]
