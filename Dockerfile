@@ -10,7 +10,6 @@ ARG NB_GID="100"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -99,9 +98,9 @@ RUN set -x && \
         "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \
-    sudo chown -R root "${CONDA_DIR}" && \
+    # chown -R root "${CONDA_DIR}" && \
     # Install the packages
-    sudo ./micromamba install \
+    ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
@@ -114,6 +113,8 @@ RUN set -x && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+USER root
 
 # Configure container startup
 ENTRYPOINT ["tini", "-g", "--"]
@@ -131,7 +132,6 @@ WORKDIR "${HOME}"
 FROM base
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -169,6 +169,8 @@ RUN mamba install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 EXPOSE 8888
+
+USER root
 
 # Configure container startup
 CMD ["start-notebook.sh"]
