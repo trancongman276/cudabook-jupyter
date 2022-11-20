@@ -2,7 +2,7 @@ ARG CUDA=116
 FROM hieupth/minicuda:11.6.2-runtime as base
 RUN python -m pip install torch torchvision torchaudio tensorflow
 
-ARG NB_USER="jovyan"
+ARG NB_USER="root"
 ARG DEFAUT_PW = "jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
@@ -39,7 +39,7 @@ RUN apt-get update --yes && \
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
     NB_USER="${NB_USER}" \
-    DEFAUT_PW = "${DEFAUT_PW}" \
+    DEFAUT_PW="${DEFAUT_PW}" \
     NB_UID=${NB_UID} \
     NB_GID=${NB_GID} \
     LC_ALL=en_US.UTF-8 \
