@@ -3,7 +3,7 @@ FROM hieupth/minicuda:11.6.2-runtime as base
 RUN python -m pip install torch torchvision torchaudio tensorflow
 
 ARG NB_USER="root"
-ARG DEFAUT_PW = "jovyan"
+ARG DEFAUT_PW="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
 
