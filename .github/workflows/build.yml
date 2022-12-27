@@ -30,7 +30,7 @@ jobs:
         with:
           push: true
           context: .
-          tags: doku9652/cudabook:114-jupyter
+          tags: doku9652/cudabook:116-jupyter
           build-args: |
             NB_USER=jovyan
             NB_UID=70
