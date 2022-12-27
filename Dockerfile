@@ -4,8 +4,8 @@ RUN python -m pip install torch torchvision torchaudio tensorflow
 
 ARG NB_USER="root"
 ARG DEFAUT_PW="jovyan"
-ARG NB_UID="1000"
-ARG NB_GID="100"
+ARG NB_UID="70"
+ARG NB_GID="70"
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
